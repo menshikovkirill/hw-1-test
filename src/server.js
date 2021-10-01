@@ -49,7 +49,6 @@ app.get("/merge", (req, res) => {
         (readableStream) => { 
             res.set({"Content-Type": "image/jpeg"});
             res.set({"Content-Disposition": "attachment"});
-            console.log(res);
             readableStream.pipe(res);
         }
     );
