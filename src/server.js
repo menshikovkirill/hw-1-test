@@ -30,7 +30,7 @@ app.delete('/image/:id', async (req, res) => {
 app.get('/list', (req, res) => {
   const allImages = db.find().map((image) => image.toPublicJSON());
 
-  return res.json({"id": "test"});
+  return res.json(allImages);
 });
 
 app.get("/merge", (req, res) => {
@@ -47,7 +47,7 @@ app.get("/merge", (req, res) => {
     const color = [...mergeUrl.color.split(",")].map(elem => parseInt(elem));
     replaceBackground(frontImage, backImage, color, mergeUrl.threshold).then(
         (readableStream) => { 
-          //  res.set({"Content-Type": "image/jpeg"});
+            res.set({"Content-Type": "image/jpeg"});
             readableStream.pipe(res);
         }
     );
