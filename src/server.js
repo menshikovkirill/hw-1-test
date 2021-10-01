@@ -30,7 +30,7 @@ app.delete('/image/:id', async (req, res) => {
 app.get('/list', (req, res) => {
   const allImages = db.find().map((image) => image.toPublicJSON());
 
-  return res.json(allImages);
+  return res.json({"id": "test"});
 });
 
 app.get("/merge", (req, res) => {
