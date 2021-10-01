@@ -1,0 +1,19 @@
+{
+  "name": "hometask1",
+  "version": "1.0.0",
+  "description": "App for storing Images files.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server",
+    "prepare": "husky install"
+  },
+  "author": "Menshikov Kirill",
+  "license": "ISC",
+  "dependencies": {
+    "backrem": "^1.1.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.3",
+    "uuid": "^8.3.2",
+    "husky": "^6.0.0"
+  }
+}
