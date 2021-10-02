@@ -47,15 +47,19 @@ app.get("/merge", (req, res) => {
     );
 
     const color = [...(mergeUrl.color || "0,0,0").split(",")].map(elem => parseInt(elem));
+    let writableStream = fs.createWriteStream(
+        imageFolder+'/merge.jpg'
+    );
+    writableStream.on("end", () => console.log("end"))
     replaceBackground(frontImage, backImage, color, (mergeUrl.threshold || 0)).then(
         (readableStream) => { 
-            res.set({"Content-Type": "image/jpeg"});
-            readableStream.pipe(res);
+            readableStream.pipe(writableStream);
+            readableStream.on("end", () => res.sendFile( imageFolder+'/merge.jpg'))
         }, 
 		(readableStream) => {
 			res.send(500);
 		}
-    );
+    ).catch((err) => console.log(err));
 }); 
 //c005b394-ab09-42a8-90a6-80fb081e7187  05270199-981d-4890-9580-7bf321ce9b02
 var storage = multer.diskStorage({
