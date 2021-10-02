@@ -49,7 +49,11 @@ app.get("/merge", (req, res) => {
     const color = [...(mergeUrl.color || "0,0,0").split(",")].map(elem => parseInt(elem));
     replaceBackground(frontImage, backImage, color, (mergeUrl.threshold || 0)).then(
         (readableStream) => { 
-            res.set({"Content-type": "image/jpeg", "Content-Disposition": "attachment; filename='filename.jpg'"});
+            var writableStream = fs.createWriteStream(
+                path.resolve(imageFolder, "merge.jpg")
+            );
+            readableStream.pipe(writableStream);
+            res.set({ 'content-type': 'image/jpeg' });
             readableStream.pipe(res);
         }, 
     ).catch((err) => res.status(500));
