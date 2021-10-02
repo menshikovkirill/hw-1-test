@@ -50,9 +50,9 @@ app.get("/merge", (req, res) => {
     replaceBackground(frontImage, backImage, color, (mergeUrl.threshold || 0)).then(
         (readableStream) => { 
             res.set({"Content-type": "image/jpeg"});
-            readableStream.pipe(res)
+            readableStream.pipe(res);
         }, 
-    ).catch((err) => res.send(500));
+    ).catch((err) => res.status(500));
 }); 
 //c005b394-ab09-42a8-90a6-80fb081e7187  05270199-981d-4890-9580-7bf321ce9b02
 var storage = multer.diskStorage({
