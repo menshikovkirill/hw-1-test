@@ -55,7 +55,7 @@ app.get("/merge", (req, res) => {
 		}
     );
 }); 
-
+//c005b394-ab09-42a8-90a6-80fb081e7187  05270199-981d-4890-9580-7bf321ce9b02
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, imageFolder);
