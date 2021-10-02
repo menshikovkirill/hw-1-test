@@ -44,10 +44,10 @@ app.get("/merge", (req, res) => {
         path.resolve(imageFolder, `./${mergeUrl.back}.jpg`)
     );
 
-    const color = [...mergeUrl.color.split(",")].map(elem => parseInt(elem));
-    replaceBackground(frontImage, backImage, color, mergeUrl.threshold).then(
+    const color = [...(mergeUrl.color || "0,0,0").split(",")].map(elem => parseInt(elem));
+    replaceBackground(frontImage, backImage, color, (mergeUrl.threshold || 0)).then(
         (readableStream) => { 
-            res.set({"Content-Type": "image/jpeg", "Content-Disposition": 'attachment; filename="merge.jpg"'});
+            res.set({"Content-Type": "image/jpeg", "Content-Disposition": 'attachment; filename="merge.jpeg"'});
             readableStream.pipe(res);
         }, 
 		(readableStream) => {
