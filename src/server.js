@@ -14,9 +14,8 @@ const app = express();
 app.use(express.json());
 
 app.get('/image/:id', (req, res) => {
-    const imageId = req.params.id;
-  
-    return res.json(db.findOne(imageId).toPublicJSON());
+    const imageId = req.params.id;    
+    res.sendFile(path.resolve(imageFolder, imageId+".jpg"))
 });
 
 app.delete('/image/:id', async (req, res) => {
@@ -49,14 +48,13 @@ app.get("/merge", (req, res) => {
     const color = [...(mergeUrl.color || "0,0,0").split(",")].map(elem => parseInt(elem));
     replaceBackground(frontImage, backImage, color, (mergeUrl.threshold || 0)).then(
         (readableStream) => { 
-            // var writableStream = fs.createWriteStream(
-            //     path.resolve(imageFolder, "merge.jpg")
-            // );
-            // readableStream.pipe(writableStream);
-            // res.set({ 'content-type': 'image/jpeg' });
-            // res.attachment("merge.jpg");
-            // readableStream.pipe(res);
-            res.send(404);
+            var writableStream = fs.createWriteStream(
+                path.resolve(imageFolder, "merge.jpg")
+            );
+            readableStream.pipe(writableStream);
+            res.set({ 'content-type': 'image/jpeg' });
+            res.attachment("merge.jpg");
+            readableStream.pipe(res);
         }, 
     );
 }); 
@@ -76,7 +74,7 @@ app.post("/upload", upload.single("image"), function (req, res) {
     const image = new Image(req.file.filename.split('.')[0], req.file.size);
     db.insert(image); 
 
-    res.send(JSON.stringify({id: image.id}));
+    res.send({id: image.id});
 });
 
 app.listen(PORT);
