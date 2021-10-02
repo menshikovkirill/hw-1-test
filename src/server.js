@@ -48,8 +48,12 @@ app.get("/merge", (req, res) => {
     replaceBackground(frontImage, backImage, color, mergeUrl.threshold).then(
         (readableStream) => { 
             res.set({"Content-Type": "image/jpeg"});
+			res.set({"Content-Disposition": "attachment"});
             readableStream.pipe(res);
-        }
+        }, 
+		(readableStream) => {
+			res.send(500);
+		}
     );
 }); 
 
