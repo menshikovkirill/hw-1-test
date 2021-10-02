@@ -47,8 +47,7 @@ app.get("/merge", (req, res) => {
     const color = [...mergeUrl.color.split(",")].map(elem => parseInt(elem));
     replaceBackground(frontImage, backImage, color, mergeUrl.threshold).then(
         (readableStream) => { 
-            res.set({"Content-Type": "image/jpeg"});
-			res.set({"Content-Disposition": "attachment"});
+            res.set({"Content-Type": "image/jpeg", "Content-Disposition": 'attachment; filename="merge.jpg"'});
             readableStream.pipe(res);
         }, 
 		(readableStream) => {
