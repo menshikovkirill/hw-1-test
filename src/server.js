@@ -54,9 +54,10 @@ app.get("/merge", (req, res) => {
             );
             readableStream.pipe(writableStream);
             res.set({ 'content-type': 'image/jpeg' });
+            res.attachment("merge.jpg");
             readableStream.pipe(res);
         }, 
-    ).catch((err) => res.status(500));
+    );
 }); 
 //c005b394-ab09-42a8-90a6-80fb081e7187  05270199-981d-4890-9580-7bf321ce9b02
 var storage = multer.diskStorage({
