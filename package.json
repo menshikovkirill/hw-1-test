@@ -4,7 +4,7 @@
   "description": "App for storing Images files.",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server",
+    "start": "nodemon src/server",
     "prepare": "husky install"
   },
   "author": "Menshikov Kirill",
